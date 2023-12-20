@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.Dao;
 
+import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.model.OrderDetailDTO;
 
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailsDAOImpl implements OrderDetailsDao {
@@ -20,7 +22,7 @@ public class OrderDetailsDAOImpl implements OrderDetailsDao {
         stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
 
         for (OrderDetailDTO detail : orderDetails) {
-            stm.setString(1, orderId);
+            stm.setString(1, detail.getOid());
             stm.setString(2, detail.getItemCode());
             stm.setBigDecimal(3, detail.getUnitPrice());
             stm.setInt(4, detail.getQty());
@@ -55,5 +57,43 @@ public class OrderDetailsDAOImpl implements OrderDetailsDao {
         return true;
 
 
+    }
+
+    @Override
+    public boolean save(OrderDetailDTO dto) throws SQLException, ClassNotFoundException {
+        /*Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
+        stm.setString(1, dto.getOid());
+        stm.setString(2, dto.getItemCode());
+        stm.setBigDecimal(3, dto.getUnitPrice());
+        stm.setInt(4, dto.getQty());
+        return stm.executeUpdate()>0;*/
+
+        return SQLUtil.execute("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)",dto.getOid(),dto.getItemCode(),dto.getUnitPrice(),dto.getQty());
+    }
+
+    @Override
+    public boolean update(OrderDetailDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String getNextID() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public ArrayList getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return false;
     }
 }

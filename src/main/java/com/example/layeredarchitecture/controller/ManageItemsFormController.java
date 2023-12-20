@@ -81,7 +81,7 @@ public class ManageItemsFormController {
                 tblItems.getItems().add(new ItemTM(rst.getString("code"), rst.getString("description"), rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand")));
             }*/
 
-            ArrayList<ItemDTO> allItems = itemDAOImpl.loadAllItems();
+            ArrayList<ItemDTO> allItems = itemDAOImpl.getAll();
 
             for (ItemDTO  i : allItems) {
                 tblItems.getItems().add(new ItemTM(i.getCode(),i.getDescription(),i.getUnitPrice(),i.getQtyOnHand()));
@@ -147,7 +147,7 @@ public class ManageItemsFormController {
             pstm.setString(1, code);
             pstm.executeUpdate();*/
 
-            itemDAOImpl.deleteItem(code);
+            boolean b = itemDAOImpl.delete(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -196,7 +196,7 @@ public class ManageItemsFormController {
                 pstm.executeUpdate();*/
 
                 ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
-                boolean isSave = itemDAOImpl.saveItems(dto);
+                boolean isSave = itemDAOImpl.save(dto);
 
                 if (isSave) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
@@ -224,7 +224,7 @@ public class ManageItemsFormController {
                 pstm.executeUpdate();*/
 
                 ItemDTO dto = new ItemDTO(code,description,unitPrice,qtyOnHand);
-                itemDAOImpl.updateItem(dto);
+                itemDAOImpl.update(dto);
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -248,7 +248,7 @@ public class ManageItemsFormController {
         pstm.setString(1, code);
         return pstm.executeQuery().next();*/
 
-        return itemDAOImpl.existItem(code);
+        return itemDAOImpl.exist(code);
     }
 
 
@@ -264,7 +264,7 @@ public class ManageItemsFormController {
                 return "I00-001";
             }*/
 
-            itemDAOImpl.generateNewId();
+            return itemDAOImpl.getNextID();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();

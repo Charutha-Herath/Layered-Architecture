@@ -81,7 +81,7 @@ public class ManageCustomersFormController {
 //            }
             CustomerDAOImpl customerDAO = new CustomerDAOImpl();
 
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAllCustomer();
+            ArrayList<CustomerDTO> allCustomer = customerDAO.getAll();
             for (CustomerDTO c : allCustomer) {
                 tblCustomers.getItems().add(new CustomerTM(c.getId(),c.getName(),c.getAddress()));
             }
@@ -162,7 +162,7 @@ public class ManageCustomersFormController {
                 pstm.executeUpdate();*/
 
                 CustomerDTO dto = new CustomerDTO(id,name,address);
-                boolean isInsert = customerDAOImpl.insertCustomerD(dto);
+                boolean isInsert = customerDAOImpl.save(dto);
 
                 if (isInsert ){
                     tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -189,7 +189,7 @@ public class ManageCustomersFormController {
                 pstm.setString(3, id);
                 pstm.executeUpdate();*/
 
-                boolean isUpdate = customerDAOImpl.updateCustomer(new CustomerDTO(id,name,address));
+                boolean isUpdate = customerDAOImpl.update(new CustomerDTO(id,name,address));
 
 
             } catch (SQLException e) {
@@ -214,7 +214,7 @@ public class ManageCustomersFormController {
         pstm.setString(1, id);
         return pstm.executeQuery().next();*/
 
-        return customerDAOImpl.existCustomer(id);
+        return customerDAOImpl.exist(id);
     }
 
 
@@ -230,7 +230,7 @@ public class ManageCustomersFormController {
             pstm.setString(1, id);
             pstm.executeUpdate();*/
 
-            boolean isDelete = customerDAOImpl.deleteCustomer(id);
+            boolean isDelete = customerDAOImpl.delete(id);
 
             if (isDelete) {
                 tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -260,7 +260,7 @@ public class ManageCustomersFormController {
             } else {
                 return "C00-001";
             }*/
-            return customerDAOImpl.generateNewId();
+            return customerDAOImpl.getNextID();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {

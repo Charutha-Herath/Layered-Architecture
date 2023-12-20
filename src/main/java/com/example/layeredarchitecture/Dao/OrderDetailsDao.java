@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface OrderDetailsDao {
+public interface OrderDetailsDao extends CrudDAO<OrderDetailDTO> {
 
     boolean InsertAndUpdate(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails, PreparedStatement stm , Connection connection) throws SQLException, ClassNotFoundException;
+
+    //boolean saveOrderDetails(OrderDetailDTO detail) throws SQLException, ClassNotFoundException;
 }

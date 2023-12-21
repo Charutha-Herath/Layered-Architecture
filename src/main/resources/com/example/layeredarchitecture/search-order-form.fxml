@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.layeredarchitecture.controller.SearchOrderFormController">
+   <children>
+      <JFXButton buttonType="RAISED" layoutX="54.0" layoutY="56.0" onAction="#BtnSearchOrderOnAction" prefHeight="62.0" prefWidth="129.0" ripplerFill="#4d81dc" style="-fx-background-color: #4d81dc;" text="Search Order">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
